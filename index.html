@@ -6,7 +6,7 @@
     <title>Happy Birthday Navya! ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        /*---334---*/
+        /*---361---*/
         /* --- RESET & BASICS --- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
@@ -358,7 +358,7 @@
         }
 
         function startGame() {
-            nextScreen(3); //DEBUG 3->2
+            nextScreen(2); //DEBUG 3->2
             gameInterval = setInterval(() => {
                 if(availableIndices.length === 0) clearInterval(gameInterval);
                 else createBalloon();
@@ -531,4 +531,5 @@
         }
     </script>
 </body>
+
 </html>
