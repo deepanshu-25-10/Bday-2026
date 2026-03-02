@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Happy Birthday Navya! ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <style>
+        /*---334---*/
         /* --- RESET & BASICS --- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
@@ -37,6 +38,28 @@
             border-radius: 50%;
             box-shadow: -15px 15px 0 5px rgba(255, 255, 255, 0.4);
             opacity: 0.6; filter: blur(1px);
+        }
+
+        /* Add this to your existing CSS */
+        .letter-box {
+            position: relative; /* Needed to position the X */
+        }
+
+        .close-x {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #ff7675;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+            z-index: 10;
+        }
+
+        .close-x:hover {
+            transform: scale(1.2) rotate(90deg);
+            color: #d63031;
         }
 
         .star {
@@ -242,20 +265,31 @@
     </div>
 
     <div id="letterModal" class="modal-overlay" onclick="closeLetter()">
-        <div class="glass-card letter-box" onclick="event.stopPropagation()">
-            <h2 style="color: #ff7675;">Dear Navyuuuu 💝,</h2>
-            <p style="margin-top: 15px; font-size: 0.95rem; line-height: 1.6;">
-                 I know sometimes i hurt you sometimes make you feel bad babe the thing is that i actuallly dont know what can make you feel good i always do the things which could give me happiness i were at your place stil i am trying to understand you and hoping to be better.
-                    
-                <br><br>
-                Keep shining, keep studying, keep growing and keep me lovinggg 😭❤️
+    <div class="glass-card letter-box" onclick="event.stopPropagation()" style="position:relative;">
+        
+        <div class="close-x" onclick="closeLetter()">✖</div>
+
+        <h2 style="color: #ff7675;">Dear Navyuuuu 💝,</h2>
+        <p style="margin-top: 15px; font-size: 0.95rem; line-height: 1.6;">
+                I know sometimes i hurt you sometimes make you feel bad babe the thing is that i actuallly dont know what can make you feel good i always do the things which could give me happiness i were at your place stil i am trying to understand you and hoping to be better.
                 
-                <br><br>
-                <b>Always here for you. ❤️</b>
-            </p>
-            <button class="btn" onclick="closeLetter()" style="width: 100%; margin-top: 20px;">Close</button>
-        </div>
+            <br><br>
+            Keep shining, keep studying, keep growing and keep me lovinggg 😭❤️
+            
+            <br><br>
+            <b>Always here for you. ❤️</b>
+        </p>
+
+        <button class="btn btn-secondary" onclick="window.location.href='secret.html'" style="width: 100%; margin-top: 25px;">
+            Open Secret Box 🎁
+        </button>
+
+        <button class="btn" onclick="window.location.href='lovegame.html'" style="width: 100%; margin-top: 15px; background: linear-gradient(45deg, #ff9a9e, #fad0c4); color: #c44569;">
+            Check Love Meter 📟
+        </button>
+
     </div>
+</div>
 
     <script>
         const finalCardImage = "https://i.ibb.co/R47fwsnH/20251123-120848.jpg"; 
@@ -324,7 +358,7 @@
         }
 
         function startGame() {
-            nextScreen(2);
+            nextScreen(3); //DEBUG 3->2
             gameInterval = setInterval(() => {
                 if(availableIndices.length === 0) clearInterval(gameInterval);
                 else createBalloon();
