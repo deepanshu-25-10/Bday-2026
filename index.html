@@ -6,7 +6,7 @@
     <title>Happy Birthday Navya! ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        /*---361---*/
+        /*---334---*/
         /* --- RESET & BASICS --- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
@@ -222,7 +222,7 @@
                 <div class="typewriter">
                     <h1>Hey Navya! 👋</h1>
                 </div>
-                <p style="margin-top: 10px;">(Deepanshuu gussaaa haiiii!!!)Small birthday gift by<br>your small part of life.(owner gussa haii!!!)</p>
+                <p style="margin-top: 10px;">Small birthday gift by<br>your small part of life.</p>
                 <button class="btn" onclick="startExperience()">Tap to Start ✨</button>
             </div>
         </div>
@@ -314,14 +314,39 @@
             "https://i.ibb.co/JwHpZtfz/Screenshot-2026-01-11-034617.png"
         ];
 
-        let score = 0;
+let score = 0;
         const totalTarget = balloonImages.length;
         let availableIndices = Array.from({length: totalTarget}, (_, i) => i);
         const colors = ['#ff7675', '#74b9ff', '#a29bfe', '#ffeaa7', '#55efc4', '#fab1a0'];
         let gameInterval;
 
-        // --- SAFE LOADER ---
+        // --- NEW IMAGE PRELOADER ---
+        let loadedImagesCount = 0;
+        const allImagesToPreload = [...balloonImages, finalCardImage]; // Include the final image too!
+
+        function preloadImagesInRAM(onComplete) {
+            allImagesToPreload.forEach(src => {
+                const img = new Image(); // Creates an image object in RAM
+                
+                img.onload = () => {
+                    loadedImagesCount++;
+                    if (loadedImagesCount === allImagesToPreload.length) onComplete();
+                };
+                
+                img.onerror = () => {
+                    loadedImagesCount++; // Count even if it fails so the app doesn't freeze
+                    if (loadedImagesCount === allImagesToPreload.length) onComplete();
+                };
+                
+                img.src = src; // This triggers the browser to download and cache it instantly
+            });
+        }
+
+        // --- SAFE LOADER (Updated) ---
+        let fallbackTimer = setTimeout(hideLoader, 8000); // Extended fallback to 8s for slow internet
+        
         function hideLoader() {
+            clearTimeout(fallbackTimer);
             const loader = document.getElementById('loader');
             if(loader) {
                 loader.style.opacity = '0';
@@ -329,14 +354,16 @@
             }
         }
 
-        // Force hide loader after 4 seconds max (Safety net)
-        setTimeout(hideLoader, 4000);
-
+        // --- UPDATED ONLOAD EVENT ---
         window.onload = function() {
-            hideLoader(); // Hide normally if loaded fast
-            const finalImg = document.getElementById('final-img-slot');
-            if(finalImg) finalImg.src = finalCardImage;
-            generateStars();
+            // Start downloading all images into cache first
+            preloadImagesInRAM(() => {
+                // Once all images are in RAM, hide the loader!
+                hideLoader(); 
+                const finalImg = document.getElementById('final-img-slot');
+                if(finalImg) finalImg.src = finalCardImage;
+                generateStars();
+            });
         };
 
         // --- NAVIGATION ---
@@ -358,7 +385,7 @@
         }
 
         function startGame() {
-            nextScreen(3); //DEBUG 3->2
+            nextScreen(2); //DEBUG 3->2
             gameInterval = setInterval(() => {
                 if(availableIndices.length === 0) clearInterval(gameInterval);
                 else createBalloon();
@@ -531,8 +558,4 @@
         }
     </script>
 </body>
-
 </html>
-
-
-
